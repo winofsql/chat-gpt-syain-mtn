@@ -98,6 +98,4 @@ $dbh = null;
 echo "データの登録が完了しました。";
 ```
 
-```
-
 ![image](https://user-images.githubusercontent.com/1501327/229727432-dd20ab1e-d56a-4a75-9d19-a2f656fa0b56.png)
