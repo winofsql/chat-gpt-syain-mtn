@@ -78,7 +78,10 @@ $allowance = $_POST['allowance'];
 $manager = $_POST['manager'];
 
 // SQL文を作成して実行
-$sql = "INSERT INTO `社員マスタ` (`社員コード`, `氏名`, `フリガナ`, `所属`, `性別`, `作成日`, `更新日`, `給与`, `手当`, `管理者`, `生年月日`) VALUES (?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, ?, ?)";
+$sql = "INSERT INTO `社員マスタ` 
+ (`社員コード`, `氏名`, `フリガナ`, `所属`, `性別`, `作成日`, `更新日`, `給与`, `手当`, `管理者`, `生年月日`) 
+ VALUES (?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, ?, ?)";
+
 $stmt = $dbh->prepare($sql);
 $stmt->bindValue(1, $code, PDO::PARAM_STR);
 $stmt->bindValue(2, $name, PDO::PARAM_STR);
