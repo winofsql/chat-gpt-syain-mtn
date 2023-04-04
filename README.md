@@ -49,3 +49,53 @@
 ```
 ![image](https://user-images.githubusercontent.com/1501327/229726891-990ae7a8-bd6b-497a-b04b-e681d7758c39.png)
 
+このフォームを送信すると、insert.php ファイルにデータが送信されます。以下は、insert.php ファイルの例です。このファイルでは、POST パラメータからフォームに入力されたデータを取得し、社員マスタ テーブルに挿入します。
+
+```php
+<?php
+// データベースに接続するための情報
+$host = 'localhost';
+$dbname = 'mydatabase';
+$user = 'myuser';
+$password = 'mypassword';
+
+// データベースに接続
+$dbh = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+
+// 文字コードを設定
+$dbh->query('SET NAMES utf8');
+
+// フォームから送信されたデータ
+// フォームから送信されたデータを取得
+$code = $_POST['code'];
+$name = $_POST['name'];
+$furigana = $_POST['furigana'];
+$department = $_POST['department'];
+$gender = $_POST['gender'];
+$birthdate = $_POST['birthdate'];
+$salary = $_POST['salary'];
+$allowance = $_POST['allowance'];
+$manager = $_POST['manager'];
+
+// SQL文を作成して実行
+$sql = "INSERT INTO `社員マスタ` (`社員コード`, `氏名`, `フリガナ`, `所属`, `性別`, `作成日`, `更新日`, `給与`, `手当`, `管理者`, `生年月日`) VALUES (?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, ?, ?)";
+$stmt = $dbh->prepare($sql);
+$stmt->bindValue(1, $code, PDO::PARAM_STR);
+$stmt->bindValue(2, $name, PDO::PARAM_STR);
+$stmt->bindValue(3, $furigana, PDO::PARAM_STR);
+$stmt->bindValue(4, $department, PDO::PARAM_STR);
+$stmt->bindValue(5, $gender, PDO::PARAM_INT);
+$stmt->bindValue(6, $salary, PDO::PARAM_INT);
+$stmt->bindValue(7, $allowance, PDO::PARAM_INT);
+$stmt->bindValue(8, $manager, PDO::PARAM_STR);
+$stmt->bindValue(9, $birthdate, PDO::PARAM_STR);
+$stmt->execute();
+
+// データベースから切断
+$dbh = null;
+
+// 完了メッセージを表示
+echo "データの登録が完了しました。";
+```
+
+```
